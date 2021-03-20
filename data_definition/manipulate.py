@@ -36,7 +36,6 @@ def decode_record(values):
     return record_strip
 
 
-
 class TupleInsert:
     position = 0
     col_name = None

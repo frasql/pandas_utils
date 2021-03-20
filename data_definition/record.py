@@ -74,7 +74,7 @@ with open(filename, 'rb') as f:
     ]
 
     # insert columns to dataframe
-    man_df = ManipulateDataFrame(dataframe, col_to_insert=col_to_insert)
+    man_df = ManipulateDataFrame(dataframe, col_to_insert=col_to_insert, col_to_drop=col_to_drop)
 
     """
     print(len(header_renamed), header_renamed, sep=",")
