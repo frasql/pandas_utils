@@ -20,7 +20,6 @@ def clean_dafaframe(df):
     return df
 
 
-
 class EsplodiCodice:
     """
     L'oggetto crea una lista di dataframe data dall'esplosione di un codice della distinta 

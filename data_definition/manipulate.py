@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, ValuesView
 import numpy as np
 
 # decode and split header from bin to list
@@ -37,6 +37,9 @@ def decode_record(values):
 
 
 class TupleInsert:
+    """
+    Define a tuple that allows to insert a column in a dataframe in a specific position
+    """
     position = 0
     col_name = None
     default_value = 0
@@ -61,6 +64,9 @@ class TupleInsert:
 
 
 class ManipulateDataFrame:
+    """
+    Object that allows to insert / delete colums from a dataframe  
+    """
     df = None
     col_to_drop = []
     col_to_insert = []
@@ -73,16 +79,26 @@ class ManipulateDataFrame:
 
         # validate col_to_insert
         if col_to_insert != None:
+            # check col_to_insert is a list
             if not isinstance(col_to_insert, list):
                 raise TypeError("Le colonne/a che inserisci devono essere un tipo List")
+            # check col_to_insert is not empty
+            if len(col_to_insert) == 0:
+                raise ValueError("col_to_insert non può essere una lista vuota, puoi ometterla")
+            # instantiate col_to_insert
             self.col_to_insert = col_to_insert
 
         # validate col_to_drop
         if col_to_drop != None:
+            # check col_to_drop is a list
             if not isinstance(col_to_drop, list):
                 raise TypeError("Le colonne/a da eliminare devono essere un tipo List")
+            # check col_to_drop is not empty
+            if len(col_to_drop) == 0:
+                raise ValueError("col_to_drop non può essere una lista vuota, puoi ometterla")
+            # instantiate col_to_drop
             self.col_to_drop = col_to_drop
-
+    
     def insert_columns_into_df(self):
         for i, _ in self.col_to_insert:
             col_insert = TupleInsert(position=self.col_to_insert[i][0], col_name=self.col_to_insert[i][1], default_value=self.col_to_insert[i][2])

@@ -2,6 +2,9 @@ import pandas as pd
 
 
 class CleanDataFrame:
+    """
+    Object that allows to clean a generic dataframe 
+    """
     def __init__(self, df, clean_col=False):
         self.df = df
 
