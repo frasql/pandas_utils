@@ -15,7 +15,7 @@ class SingleFilter:
 
 
     """
-    Object that allow to filter on single column by single(multiple) value(s) of a pandas DataFrame.
+    Object that allows to filter on single column by single(multiple) value(s) of a pandas DataFrame.
     :param tuple_filters for single item a tuple("name_column", "value_to_search")
     :param tuple_filters for multiple items is a tuple("name_column", ["values_to_search"])
     """
@@ -67,6 +67,14 @@ class SingleFilter:
             return False
         else:
             True
+        
+    # read series list and apply them to original dataframe
+    @property
+    def get_dataframe(self):
+        if len(self.tuple_filters) != 0:
+            return self.df
+        else:
+            return self.df
 
     # create filtered dataframe for each filter
     def _filters_opt(self):
@@ -86,20 +94,13 @@ class SingleFilter:
                 self.df = self.df[filt]
                 self.series.append(filt)
 
-    # read series list and apply them to original dataframe
-    def create_dataframe(self):
-        if len(self.tuple_filters) != 0:
-            return self.df
-        else:
-            return self.df
 
-
-
+# multiple SingleFilter merged allows to filter on multiple columns
 def create_filtered_dataframe(df, request_tuple):    
     list_dfs = []
     for t in request_tuple:
         filter = SingleFilter(df, t)
-        filtered_df = filter.create_dataframe()
+        filtered_df = filter.get_dataframe
         list_dfs.append(filtered_df)
         df = filtered_df
 
@@ -117,9 +118,8 @@ def create_filtered_dataframe(df, request_tuple):
 
 if __name__ == '__main__':
    
-    # ex. flask request.form
     # dict keys and values to filter
-    request_dict = {'id_artico': [0, 1482, 1483], 'qta': 6}
+    request_dict = {'id_artico': [0, 1482, 1483], 'qta': 6} # ex. flask request.form
     # tuple keys and values
     request_tuple = [(k, v) for k, v in request_dict.items()]
     df = read_dataframe()

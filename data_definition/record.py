@@ -54,7 +54,7 @@ with open(filename, 'rb') as f:
 
     # loop through dataframe length
     for i in range(0, len(index)):
-            # insert record in empty dataframe
+            # insert records in empty dataframe
             dataframe.iloc[i] = records[i]
 
     # list of column to drop

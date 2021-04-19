@@ -19,13 +19,13 @@ class CleanDataFrame:
     def clean_columns(col_to_clean):
         return col_to_clean.strip().lower().replace(' ', '_').replace('à', 'a')
 
+    @property
+    def get_dataframe(self):
+        return self.df
 
     def replace_none(self):
         if self.df.isna():
             self.df.fillna(-9999)
-
-    def get_cleaned_dataframe(self):
-        return self.df
-
+            
     def __repr__(self):
         return f'CleanDataframe({self.df.columns})'
