@@ -1,7 +1,6 @@
 import pandas as pd
 from typing import List
 import time
-from collections import deque
 
 
 def read_dataframe():
@@ -95,12 +94,8 @@ class SingleFilter:
             return self.df
 
 
-if __name__ == '__main__':
-   
-    # ex. flask request.form
-    request_dict = {'id_artico': [0, 1482, 1483], 'qta': 6}
-    request_tuple = [(k, v) for k, v in request_dict.items()]
-    df = read_dataframe()
+
+def create_filtered_dataframe(df, request_tuple):    
     list_dfs = []
     for t in request_tuple:
         filter = SingleFilter(df, t)
@@ -117,7 +112,22 @@ if __name__ == '__main__':
             merged = pd.merge(list_dfs[l], list_dfs[l+1], on='id', how='inner', suffixes=('', '_y'))
             merged.drop(merged.filter(regex='_y$').columns.tolist(),axis=1, inplace=True)
 
-    print(merged)
+    return merged
+
+
+if __name__ == '__main__':
+   
+    # ex. flask request.form
+    # dict keys and values to filter
+    request_dict = {'id_artico': [0, 1482, 1483], 'qta': 6}
+    # tuple keys and values
+    request_tuple = [(k, v) for k, v in request_dict.items()]
+    df = read_dataframe()
+
+    filtered_df = create_filtered_dataframe(df, request_tuple=request_tuple)
+    print(filtered_df)
+    
+    
     
 
 
